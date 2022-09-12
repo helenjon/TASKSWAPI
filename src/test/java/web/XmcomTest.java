@@ -4,15 +4,18 @@ import backend.enums.DateRangeSelection;
 import backend.enums.ScreenResolutions;
 import com.codeborne.selenide.Selenide;
 import hooks.BaseHookWeb;
+import io.qameta.allure.TmsLink;
 import lombok.SneakyThrows;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import web.pages.EconomicCalendarPage;
 import web.pages.HomePage;
 import web.pages.RiskWarningPage;
+import web.steps.EconomicCalendarPageSteps;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,23 +30,22 @@ import static driver.DriverInit.getDriver;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class XmcomTest extends BaseHookWeb {
+class XmcomTest extends BaseHookWeb {
 
-    HomePage homePage = new HomePage();
-    EconomicCalendarPage economicCalendarPage = new EconomicCalendarPage();
-    RiskWarningPage riskWarningPage = new RiskWarningPage();
+    private final HomePage homePage = new HomePage();
+    private final EconomicCalendarPage economicCalendarPage = new EconomicCalendarPage();
+    private final RiskWarningPage riskWarningPage = new RiskWarningPage();
+    private final EconomicCalendarPageSteps economicCalendarPageSteps = new EconomicCalendarPageSteps();
 
     private static final String RISK_DISCLOSERS_PDF_TAB_TITLE = "XM-Risk-Disclosures-for-Financial-Instruments.pdf";
 
-    @ParameterizedTest  //,,
+    @DisplayName("Test Task 1 web")
+    @TmsLink("Test-11")
+    @ParameterizedTest
     @EnumSource(value = ScreenResolutions.class, names = {"MAXIMUM", "RESOLUTION1024X768", "RESOLUTION800X600"})
     void testTask1_test1(ScreenResolutions screenResolutions) {
         setTestWindowResolution(screenResolutions);
-        homePage.openHomePage()
-                .clickResearchEducation()
-                .clickEconomicCalendar();
-        economicCalendarPage.clickHereLink();
-        riskWarningPage.waitForPageLoading();
+        economicCalendarPageSteps.goToEconomicCalendarPage();
 //https://www.xm.com/research/risk_warning:
 // - go directly - page tab title - Research
 // - go via "here" link - page tab title - Economic Calendar
@@ -55,9 +57,11 @@ public class XmcomTest extends BaseHookWeb {
         );
     }
 
+    @DisplayName("Test Task 1 web Test2")
+    @TmsLink("Test-12")
     @ParameterizedTest
     @EnumSource(value = ScreenResolutions.class, names = {"RESOLUTION800X600"})
-    void testTask1_test2(ScreenResolutions screenResolutions) {
+     void testTask1_test2(ScreenResolutions screenResolutions) {
         setTestWindowResolution(screenResolutions);
         homePage.openHomePage()
                 .waitForPageLoading()
@@ -72,7 +76,6 @@ public class XmcomTest extends BaseHookWeb {
 //      //  checkDates(economicCalendarPage.getDateRangeValue(), TODAY);
 //        economicCalendarPage.clickTomorrowButton();
 //      //  checkDates(economicCalendarPage.getDateRangeValue(), TOMORROW);
-
         economicCalendarPage.clickTimeSelectorThisWeek();
         economicCalendarPage.clickThisWeekButton();
         economicCalendarPage.clickTimeSelectorThisWeek();
@@ -80,9 +83,10 @@ public class XmcomTest extends BaseHookWeb {
         economicCalendarPage.clickTimeSelectorThisWeek();
         economicCalendarPage.clickTodayButton();
         economicCalendarPage.clickTimeSelectorThisWeek().clickTomorrowButton();
-
     }
 
+    @DisplayName("Test Task 1 web Test3")
+    @TmsLink("Test-13")
     @Test
     void testTask1_test3() {
         homePage.openHomePage()
@@ -129,6 +133,4 @@ public class XmcomTest extends BaseHookWeb {
         assertEquals(expectedStartDate, actualDates.get(0), "Wrong dates rage for Start Date of " + dateRangeSelection);
         assertEquals(expectedEndDate, actualDates.get(1), "Wrong dates rage for End Date of " + dateRangeSelection);
     }
-
-
 }

@@ -5,8 +5,8 @@ import backend.businesobjects.models.FilmsListEntity;
 import backend.businesobjects.models.PersonEntity;
 import backend.businesobjects.models.StarshipEntity;
 import backend.services.exceptions.ExceptionNotUniqueElement;
+import backend.utils.Log;
 import backend.utils.ReadPropertyFile;
-import backend.utils.helpers.RestParametersHelper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -24,9 +24,6 @@ public class WsapiFilmSteps extends RestAssured {
     private static String propertiesFilePath = "src/test/resources/swapi.properties";
     private static final String SWAPI_API_BASE_URL = ReadPropertyFile.getProperties(propertiesFilePath).getProperty("swapi.api.base.url");
     private static final String SWAPI_API_FILMS_URL = ReadPropertyFile.getProperties(propertiesFilePath).getProperty("swapi.api.films.url");
-    private static final String SWAPI_API_PEOPLE_URL = ReadPropertyFile.getProperties(propertiesFilePath).getProperty("swapi.api.people.url");
-
-
 
     private FilmsListEntity getFilmsListEntity() {
         Response response = given()
@@ -67,21 +64,24 @@ public class WsapiFilmSteps extends RestAssured {
     }
 
     public List<PersonEntity> getlistOfCharacters(String filmname) {
+        Log.info("Get list of characters");
         return getCharactersUrlListForFilm(filmname)
                 .stream().map(this::getPersonEntity)
                 .collect(Collectors.toList());
     }
 
     public PersonEntity getPersonWithName(String filmName, String personName) {
-
+        Log.info("Get person with name");
         return getlistOfCharacters(filmName).stream().filter(e -> e.name.equals(personName)).collect(Collectors.toList()).get(0);
     }
 
     public List<StarshipEntity> getListStarshipOfPerson(String filmName, String personName) {
+        Log.info("Get list startship of person");
         return getPersonWithName(filmName, personName).starships.stream().map(this::getStarshipEntity).collect(Collectors.toList());
     }
 
     public List<FilmEntity> getFilmsList(){
+        Log.info("Get list of films");
         return new ArrayList<>(getFilmsListEntity().getResults());
     }
 
