@@ -1,10 +1,10 @@
 package driver;
 
+import backend.utils.Log;
 import backend.utils.ReadPropertyFile;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -23,6 +23,7 @@ public abstract class DriverInit {
     private static WebDriver driver;
 
     public DriverInit() {
+
     }
 
     public static boolean isSelenideDriverExist() {
@@ -50,22 +51,20 @@ public abstract class DriverInit {
     private static void init() {
         initBrowser(platformName);
         getDriver().manage().deleteAllCookies();
-//        getDriver().manage().window().maximize();
         getDriver().manage().timeouts().implicitlyWait(Duration.ofMillis(Integer.parseInt(implicitlyWait)));
     }
 
     public static void close() {
         if (isSelenideDriverExist()) {
-      //      Log.info("The driver is closing...");
-
+            Log.info("The driver is closing...");
             try {
                 Selenide.clearBrowserCookies();
                 Selenide.clearBrowserLocalStorage();
                 WebDriverRunner.closeWebDriver();
                 webdriver.remove();
-     //           Log.info("The driver has been closed.");
+                Log.info("The driver has been closed.");
             } catch (Exception var4) {
-      //        Log.warn(var4.getMessage());
+                Log.warn(var4.getMessage());
             }
 
         }
@@ -93,7 +92,6 @@ public abstract class DriverInit {
             webdriver.get();
         }
     }
-
 
     public static DriverWaiter waiter() {
         if (driverWaiter.get() == null) {

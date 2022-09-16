@@ -2,6 +2,7 @@ package beckend;
 
 import backend.businesobjects.models.StarshipEntity;
 import backend.services.controllers.wsapi.WsapiFilmSteps;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -9,13 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class SwapiTest {
+class SwapiTest {
 
     private static final String FILM_NAME = "A New Hope";
     private static final String PERSON_NAME = "Biggs Darklighter";
     private WsapiFilmSteps wsapiFilmSteps = new WsapiFilmSteps();
 
     @Test
+    @DisplayName("Test Task 2 BE")
     void testTask2() {
         var listPrsonStarships = wsapiFilmSteps.getListStarshipOfPerson(FILM_NAME, PERSON_NAME);
         String expectedPilotName = "Luke Skywalker";
