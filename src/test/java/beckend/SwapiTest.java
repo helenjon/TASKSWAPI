@@ -43,6 +43,7 @@ class SwapiTest {
         test.add("2018-01-30");
         test.add("2018-09-30");
         test.add("2018-12-30");
+        test.add("2018-12-30");
         test.stream().filter(e -> LocalDate.parse(e).getMonth().equals(currentdate.getMonth())).collect(Collectors.toList()).size();
 
 
