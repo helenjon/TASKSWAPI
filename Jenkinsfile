@@ -1,8 +1,8 @@
-pipline{
+pipline {
     agent any
 
     stages {
-        stage("Build"){
+        stage("Build") {
             steps {
             sh "mvn -version"
             sh "mvn clean compile"
@@ -10,8 +10,8 @@ pipline{
         }
     }
 
-    post{
-        always{
+    post {
+        always {
         cleanWs()
         }
     }
