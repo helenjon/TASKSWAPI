@@ -12,7 +12,8 @@ pipeline {
                 sh "mvn sonar:sonar \
                       -Dsonar.projectKey=TEST_TEST \
                       -Dsonar.host.url=http://192.168.197.161:9000 \
-                      -Dsonar.login=sqp_2c3324b1c255ae6c175327910ace7486b1033a78"
+                      -Dsonar.login=sqp_2c3324b1c255ae6c175327910ace7486b1033a78
+                      -Dsonar.java.binaries=**/target/classes\"
             }
         }
     }
