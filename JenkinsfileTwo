@@ -10,8 +10,8 @@ pipeline {
             steps {
                 sh "mvn -version"
                 sh 'echo "Running autotests"'
-                sh 'mvn clean'
-                sh 'mvn test'
+                sh 'mvn test \
+                    -f pom.xml'
                 sh "mvn sonar:sonar \
                       -Dsonar.projectKey=TEST_TEST \
                       -Dsonar.host.url=http://192.168.197.161:9000 \
